@@ -1,3 +1,4 @@
+<script>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -150,3 +151,16 @@
     </script>
 </body>
 </html>
+// ... существующий код ...
+
+// Получаем параметр q из URL (автоматический поиск)
+const urlParams = new URLSearchParams(window.location.search);
+const initialQuery = urlParams.get('q');
+
+if (initialQuery) {
+    document.getElementById('search-input').value = decodeURIComponent(initialQuery.replace(/\+/g, ' '));
+    // Автоматически запускаем поиск
+    setTimeout(() => {
+        searchVideos();  // твоя функция поиска
+    }, 500);  // небольшая задержка, чтобы страница прогрузилась
+}
