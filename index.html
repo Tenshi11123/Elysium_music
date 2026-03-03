@@ -87,6 +87,29 @@
 
     <script>
         const webApp = window.Telegram.WebApp;
+        // ... после webApp.expand(); ...
+
+// Читаем start_param (Telegram передаёт его сюда)
+const startParam = webApp.initDataUnsafe.start_param || '';
+
+// Если есть start_param — используем как запрос
+let autoQuery = '';
+if (startParam) {
+    // Восстанавливаем пробелы (мы заменили их на _ в боте)
+    autoQuery = decodeURIComponent(startParam.replace(/_/g, ' '));
+}
+
+// Если есть autoQuery — заполняем поле и запускаем поиск
+if (autoQuery) {
+    const input = document.getElementById('search-input');
+    if (input) {
+        input.value = autoQuery;
+    }
+    // Запускаем поиск через небольшую задержку (чтобы страница прогрузилась)
+    setTimeout(() => {
+        searchVideos();  // твоя функция поиска из предыдущего кода
+    }, 800);
+}
         webApp.ready();
         webApp.expand(); // Развернуть на весь экран
 
